@@ -89,13 +89,6 @@ const Trending: React.FC = () => {
         });
     };
 
-    const candlestickData = [
-        {x: '2024-01-01', y: [100, 150, 90, 120]},
-        {x: '2024-01-02', y: [110, 160, 95, 130]},
-        {x: '2024-01-03', y: [120, 170, 100, 140]},
-        // Add more data points as needed
-    ];
-
     const [selectedSymbol,setSelectedSymbol] = useState('IBM')
 
     const {
@@ -210,7 +203,6 @@ const Trending: React.FC = () => {
                                         helperText="Select Exchange"
                                         defaultValue={selectedSymbol}
                                         onChange={(e) => {
-                                            console.log(e.target.value);
                                             setSelectedSymbol(e.target.value);
                                         }}>
                                         {stockExchangeOptions.map((option) => <option>{option}</option>)}
