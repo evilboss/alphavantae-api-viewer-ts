@@ -3,3 +3,6 @@ node_modules
 *.log
 yarn.lock
 .env
+
+# Local Netlify folder
+.netlify
