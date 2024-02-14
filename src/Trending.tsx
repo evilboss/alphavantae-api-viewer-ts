@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 import BarChart from "./BarChart";
 import CandlestickGraph from "./CandlestickGraph";
-import {useFetch} from 'usehooks-ts'
+import useSWR from "swr";
 import {Select} from "flowbite-react";
-import _ from "lodash";
 
 const apiKey = process.env.REACT_APP_ALPHAVANTAE_API_KEY || 'demo';
 const Trending: React.FC = () => {
@@ -89,18 +88,16 @@ const Trending: React.FC = () => {
         });
     };
 
-    const [selectedSymbol,setSelectedSymbol] = useState('IBM')
+    const [selectedSymbol, setSelectedSymbol] = useState('IBM')
 
-    const {
-        data = {},
-        error
-    } = useFetch<any>(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${selectedSymbol}&outputsize=full&apikey=${apiKey}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
+    const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
+    const {data = {}, error, isLoading} = useSWR(
+        `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${selectedSymbol}&outputsize=full&apikey=${apiKey}`,
+        fetcher
+    );
+
+    console.log('data, error, isLoading', data, error, isLoading)
     const {
         'Meta Data': metaData,
         'Information': errorInfo = '',
@@ -126,7 +123,7 @@ const Trending: React.FC = () => {
 
     return (
         <div>
-            {!errorInfo ? <>{_.isEmpty(data) ?
+            {!errorInfo ? <>{isLoading ?
                     <div role="status">
                         <svg aria-hidden="true"
                              className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"

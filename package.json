@@ -21,6 +21,7 @@
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "swr": "^2.2.4",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3",
     "usehooks-ts": "^2.14.0",
@@ -31,7 +32,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "netlify deploy"
+    "deploy": "yarn buld && netlify deploy"
   },
   "eslintConfig": {
     "extends": [
